@@ -5,6 +5,7 @@ You can provide urls with only arguments if you close the input to it.
 
 # Requirements
 Chicken Scheme, and the followings eggs:
-    - uri-common
-    - intarweb
-    - openssl (optional, recommend)
+
+  - uri-common
+  - intarweb
+  - openssl (optional, recommend)
