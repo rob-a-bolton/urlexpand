@@ -60,7 +60,7 @@
 (receive (options operands)
   (args:parse (command-line-arguments) opts)
   (let ([urls (flatten operands
-                       (if (alist-ref 'stdin options)
+                       (if (or (null-list? operands) (alist-ref 'stdin options))
                          (read-lines)
                          '()))])
     (map expand-url urls)))
