@@ -1,10 +1,32 @@
+(use args)
 (use uri-common)
 (use intarweb)
 (use tcp)
 (use utils)
 
+(define version "0.1")
+
+(define opts
+  (list (args:make-option (i stdin)     #:none  "If set, read URLs from stdin")
+        (args:make-option (v V version) #:none  "Display version"
+            (print-version))
+        (args:make-option (h help)      #:none  "Display help"
+            (print-help))))
+
+(define print-err-exit (lambda (message)
+  (begin
+    (with-output-to-port (current-error-port)
+      (lambda ()
+        (print message)))
+    (exit 1))))
+
+(define print-version (lambda ()
+  (print-err-exit (conc "urlextend version " version))))
+
 (define print-help (lambda ()
-  (write-string "Usage: Pipe and/or provide shortened URLS and they shall be printed in the order they were given (args before stdin")))
+  (print-err-exit (conc "Usage: " (car (argv)) " [options...] [urls]"
+                        #\newline
+                        (args:usage opts)))))
 
 (define redirect-codes
   '(301 ; Moved permanently
@@ -31,8 +53,17 @@
             (exit-with-message "No redirect location in header")
             (write-line (uri->string location)))))))))
 
-(if (command-line-arguments)
-  (map expand-url (flatten (command-line-arguments) (read-lines)))
-  (print-help))
+
+(define options)
+(define operands)
+
+(receive (options operands)
+  (args:parse (command-line-arguments) opts)
+  (let ([urls (flatten operands
+                       (if (alist-ref 'stdin options)
+                         (read-lines)
+                         '()))])
+    (map expand-url urls)))
+
 
 (exit 0)
