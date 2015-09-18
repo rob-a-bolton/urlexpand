@@ -8,6 +8,7 @@ To read from both stdin and arguments, use the -i flag.
 # Requirements
 Chicken Scheme, and the followings eggs:
 
+  - args
   - uri-common
   - intarweb
   - openssl (optional, recommend)
