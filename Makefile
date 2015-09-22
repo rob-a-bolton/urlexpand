@@ -5,13 +5,13 @@ ifndef PREFIX
 endif
 
 all:
-	csc urlextend.scm
+	csc urlexpand.scm
 
 clean:
-	rm urlextend
+	rm urlexpand
 
 install:
-	cp urlextend $(PREFIX)/bin/urlextend
+	cp urlexpand $(PREFIX)/bin/urlexpand
 
 uninstall:
-	rm $(PREFIX)/bin/urlextend
+	rm $(PREFIX)/bin/urlexpand

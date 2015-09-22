@@ -33,7 +33,7 @@
     (exit 1))))
 
 (define print-version (lambda ()
-  (print-err-exit (conc license #\newline #\newline "urlextend version " version))))
+  (print-err-exit (conc license #\newline #\newline "urlexpand version " version))))
 
 (define print-help (lambda ()
   (print-err-exit (conc "Usage: " (car (argv)) " [options...] [urls]"
